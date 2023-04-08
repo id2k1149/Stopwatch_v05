@@ -12,13 +12,8 @@ struct ContentView: View {
     @State private var digitalStartTime: TimeInterval?
     @State private var timer: Timer?
     @State private var digitalTimeLabel: String = "00:00.00"
-    
-    let circleDiameter = UIScreen.main.bounds.width * 0.9
 
     var body: some View {
-        
-        let lineWidth = circleDiameter / 100
-        let handLength = circleDiameter * 0.85
         
         VStack {
             
@@ -34,14 +29,9 @@ struct ContentView: View {
             
             Spacer()
             ZStack {
-                CircleView(circleDiameter: circleDiameter,
-                           lineWidth: lineWidth)
-                
-                OrangeHand(lineWidth: lineWidth,
-                           handLength: handLength,
-                           fullSeconds: fullSeconds(),
-                           circleDiameter: circleDiameter
-                )
+                CircleView()
+                OrangeHand(fullSeconds: fullSeconds())
+
             }
             Spacer()
             
@@ -91,17 +81,17 @@ struct ContentView: View {
 }
 
 struct CircleView: View {
-    let circleDiameter: CGFloat
-    let lineWidth: CGFloat
-    
     var body: some View {
+        let circleDiameter = UIScreen.main.bounds.width * 0.9
+        let lineWidth = circleDiameter / 100
+        
         Circle()
             .fill(Color.white)
             .frame(width: circleDiameter,
                    height: circleDiameter)
         
-        ForEach(0..<60, id: \.self) { tick in
-            MinuteMark(minute: tick,
+        ForEach(0..<60, id: \.self) { minute in
+            MinuteMark(minute: minute,
                  lineWidth: lineWidth,
                  circleDiameter: circleDiameter)
         }
@@ -124,12 +114,14 @@ struct MinuteMark: View {
 }
 
 struct OrangeHand: View {
-    let lineWidth: CGFloat
-    let handLength: CGFloat
     var fullSeconds: Double
-    let circleDiameter: CGFloat
     
     var body: some View {
+        
+        let circleDiameter = UIScreen.main.bounds.width * 0.9
+        let lineWidth = circleDiameter / 100
+        let handLength = circleDiameter * 0.85
+
         GeometryReader { geometry in
             Path { path in
                 path.move(to: CGPoint(x: geometry.size.width / 2,
