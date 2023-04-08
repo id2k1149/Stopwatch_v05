@@ -14,9 +14,7 @@ struct ContentView: View {
     @State private var digitalTimeLabel: String = "00:00.00"
 
     var body: some View {
-        
         VStack {
-            
             Text(digitalTimeLabel)
                 .font(.system(size: 64, design: .monospaced))
                 .fontWeight(.regular)
@@ -26,15 +24,12 @@ struct ContentView: View {
                 .cornerRadius(10)
                 .shadow(radius: 5)
                 .padding(.bottom, 50)
-            
             Spacer()
             ZStack {
                 CircleView()
                 OrangeHand(fullSeconds: fullSeconds())
-
             }
             Spacer()
-            
             Button(action: {
                 if timer == nil {
                     digitalStartTime = Date().timeIntervalSinceReferenceDate
@@ -117,7 +112,6 @@ struct OrangeHand: View {
     var fullSeconds: Double
     
     var body: some View {
-        
         let circleDiameter = UIScreen.main.bounds.width * 0.9
         let lineWidth = circleDiameter / 100
         let handLength = circleDiameter * 0.85
